@@ -1,0 +1,13 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tut.tutims.mapper.DepartmentTypeMapper">
+    <insert id="addByName">
+        insert into department_type(`name`)
+        values (#{name,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="selectByName" resultType="com.tut.tutims.entry.pojo.DepartmentType">
+        select *
+        from department_type
+        where name = #{name,jdbcType=VARCHAR} limit 1
+    </select>
+</mapper>

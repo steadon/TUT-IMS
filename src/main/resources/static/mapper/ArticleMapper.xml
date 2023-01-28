@@ -1,0 +1,32 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tut.tutims.mapper.ArticleMapper">
+    <resultMap id="BaseResultMap" type="com.tut.tutims.entry.pojo.Article">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="department_id" jdbcType="INTEGER" property="departmentId"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="author" jdbcType="VARCHAR" property="author"/>
+        <result column="week" jdbcType="INTEGER" property="week"/>
+        <result column="time" jdbcType="VARCHAR" property="time"/>
+        <result column="guard_info_id" jdbcType="INTEGER" property="guardInfoId"/>
+        <result column="report_info_id" jdbcType="INTEGER" property="reportInfoId"/>
+    </resultMap>
+
+    <insert id="addArticle">
+        insert into article (`department_id`, `title`, `author`, `week`, `time`)
+        values (#{departmentId}, #{title}, #{author}, #{weekNum}, #{time})
+    </insert>
+    <update id="updateForeignId">
+        update article
+        set guard_info_id=#{id1},
+            report_info_id=#{id2}
+    </update>
+    <select id="selectNewOne" resultType="com.tut.tutims.entry.pojo.Article">
+        select *
+        from article
+        order by id desc limit 1
+    </select>
+    <select id="selectAll" resultType="com.tut.tutims.entry.pojo.Article">
+        select *
+        from article;
+    </select>
+</mapper>

@@ -1,0 +1,25 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tut.tutims.mapper.ReportInfoMapper">
+
+    <insert id="addOne">
+        insert into report_info(article_id)
+        values (#{articleId})
+    </insert>
+    <update id="updateInfo">
+        update report_info
+        set push_num   =#{pushNum},
+            ask_num    =#{askNum},
+            push_title =#{pushTitle},
+            is_agree   =#{isAgree},
+            sign_date  =#{signDate}
+        where article_id = #{articleId}
+    </update>
+    <select id="selectNewId" resultType="java.lang.Integer">
+        select id
+        from report_info limit 1;
+    </select>
+    <select id="selectAll" resultType="com.tut.tutims.entry.pojo.ReportInfo">
+        select *
+        from report_info;
+    </select>
+</mapper>

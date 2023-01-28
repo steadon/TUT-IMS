@@ -1,0 +1,22 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tut.tutims.mapper.DepartmentMapper">
+    <insert id="addByNameAndType">
+        insert into department(`name`, `type_id`)
+        values (#{name,jdbcType=VARCHAR}, #{typeId,jdbcType=INTEGER})
+    </insert>
+    <select id="selectByName" resultType="com.tut.tutims.entry.pojo.Department">
+        select *
+        from department
+        where name = #{name,jdbcType=VARCHAR} limit 1
+    </select>
+    <select id="selectAllDepartment" resultType="com.tut.tutims.entry.pojo.Department">
+        select *
+        from department;
+    </select>
+    <select id="selectById" resultType="com.tut.tutims.entry.pojo.Department">
+        select *
+        from department
+        where id = #{departmentId,jdbcType=INTEGER} limit 1
+    </select>
+
+</mapper>

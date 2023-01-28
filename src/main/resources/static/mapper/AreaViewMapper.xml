@@ -1,0 +1,9 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tut.tutims.mapper.AreaViewMapper">
+
+    <select id="selectAllById" resultType="com.tut.tutims.entry.pojo.AreaView">
+        select *
+        from area_info_view
+        where area_id = #{areaId}
+    </select>
+</mapper>

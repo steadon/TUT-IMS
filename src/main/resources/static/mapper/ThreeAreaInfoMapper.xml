@@ -1,0 +1,30 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tut.tutims.mapper.ThreeAreaInfoMapper">
+
+    <insert id="addOne">
+        insert into three_area_info(area_id, article_id)
+        values (1, #{articleId}),
+               (2, #{articleId}),
+               (3, #{articleId})
+    </insert>
+    <update id="updateInfo">
+        update three_area_info
+        set num=#{num},
+            `date`=#{date},
+            title=#{title},
+            main_form=#{mainForm},
+            public_form=#{publicForm},
+            score=#{score}
+        where article_id = #{articleId}
+          and area_id = #{areaId}
+    </update>
+    <select id="selectForNewTree" resultType="java.lang.Integer">
+        select id
+        from three_area_info
+        order by id desc limit 3
+    </select>
+    <select id="selectAll" resultType="com.tut.tutims.entry.pojo.ThreeAreaInfo">
+        select *
+        from three_area_info;
+    </select>
+</mapper>

@@ -1,0 +1,25 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tut.tutims.mapper.GuardInfoMapper">
+
+    <insert id="addOne">
+        insert into guard_info(article_id)
+        values (#{articleId})
+    </insert>
+    <update id="updateInfo">
+        update guard_info
+        set is_public   = #{isPublic},
+            public_form = #{publicForm},
+            main_form   = #{mainForm},
+            issue_num   = #{issueNum},
+            score       = #{score}
+        where article_id = #{articleId}
+    </update>
+    <select id="selectNewId" resultType="java.lang.Integer">
+        select id
+        from guard_info limit 1;
+    </select>
+    <select id="selectAll" resultType="com.tut.tutims.entry.pojo.GuardInfo">
+        select *
+        from guard_info;
+    </select>
+</mapper>
