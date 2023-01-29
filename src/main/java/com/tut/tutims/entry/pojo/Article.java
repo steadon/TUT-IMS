@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class Article {
-    //缺少首长批示和扣分情况
     private Integer id;
     private Integer departmentId;
     private String title;
@@ -13,4 +12,9 @@ public class Article {
     private String time;
     private Integer guardInfoId;
     private Integer reportInfoId;
+    private String agreeInfo;
+    private Double agreeScore;
+    private String loseInfo;
+    private Double loseScore;
+    private String addInfo;
 }

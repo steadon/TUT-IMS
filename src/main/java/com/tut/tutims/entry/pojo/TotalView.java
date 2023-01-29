@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class TotalView {
-    //缺少首长批示和扣分情况
+    //基本信息
     private Integer id;
     private String department;
     private String title;
@@ -33,4 +33,11 @@ public class TotalView {
     private String areaMainForm;
     private String areaPublicForm;
     private String areaScore;
+    //首长批示及扣分
+    private String agreeInfo;
+    private Double agreeScore;
+    private String loseInfo;
+    private Double loseScore;
+    //备注
+    private String addInfo;
 }

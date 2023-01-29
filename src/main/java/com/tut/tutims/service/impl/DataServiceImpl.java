@@ -3,6 +3,7 @@ package com.tut.tutims.service.impl;
 import com.tut.tutims.entry.CommonResult;
 import com.tut.tutims.entry.param.*;
 import com.tut.tutims.entry.pojo.*;
+import com.tut.tutims.entry.result.AllDataList;
 import com.tut.tutims.entry.result.DepartmentList;
 import com.tut.tutims.entry.result.TotalDataList;
 import com.tut.tutims.mapper.*;
@@ -35,6 +36,14 @@ public class DataServiceImpl implements DataService {
         List<Department> departments = departmentMapper.selectAllDepartment();
         if (departments == null) return CommonResult.fail("暂未创建任何部门");
         DepartmentList list = new DepartmentList(departments);
+        return CommonResult.success(list);
+    }
+
+    @Override
+    public CommonResult<AllDataList> getAll() {
+        List<TotalView> totalViews = totalViewMapper.selectAll();
+        if (totalViews.isEmpty()) return CommonResult.fail("暂无数据");
+        AllDataList list = new AllDataList(totalViews);
         return CommonResult.success(list);
     }
 
@@ -83,6 +92,7 @@ public class DataServiceImpl implements DataService {
     public CommonResult<TotalDataList> getScoreList() {
 
         Map<String, Integer> map = new HashMap<>();
+        Map<String, ScoreParam> mapE = new HashMap<>();
         Map<String, DataParam> mapG = new HashMap<>();
         Map<String, DataParam> mapA = new HashMap<>();
         Map<String, DataParam> mapB = new HashMap<>();
@@ -100,11 +110,23 @@ public class DataServiceImpl implements DataService {
                 mapA.put(department, new DataParam());
                 mapB.put(department, new DataParam());
                 mapC.put(department, new DataParam());
+                mapE.put(department, new ScoreParam());
             }
+            //统计加分扣分
+            Double agreeScore = totalView.getAgreeScore();
+            Double loseScore = totalView.getLoseScore();
+            //解决空指针安全
+            if (agreeScore == null) agreeScore = 0.0;
+            if (loseScore == null) loseScore = 0.0;
+            ScoreParam scoreParam = mapE.get(department);
+            Double originAS = scoreParam.getAgreeScore();
+            scoreParam.setAgreeScore(originAS + agreeScore);
+            Double originLS = scoreParam.getLoseScore();
+            scoreParam.setLoseScore(originLS + loseScore);
+
             //警备区刊用形式
             String publicForm = totalView.getPublicForm();
             final DataParam moreDataParam = mapG.get(department);
-
             updateCount(publicForm, moreDataParam);
             //上报要讯编号->判断是否上报
             String pushNum = totalView.getPushNum();
@@ -139,12 +161,30 @@ public class DataServiceImpl implements DataService {
                 Double scoreB = paramB.getScore();
                 DataParam paramC = mapC.get(k);
                 Double scoreC = paramC.getScore();
-                TotalDataParam param = new TotalDataParam(id, k, v, paramG, paramA, paramB, paramC, 0.0, 0.0, scoreG + scoreA + scoreB + scoreC);
+                ScoreParam scoreParam = mapE.get(k);
+                Double agreeScore = scoreParam.getAgreeScore();
+                Double loseScore = scoreParam.getLoseScore();
+                TotalDataParam param = new TotalDataParam(id, k, v, paramG, paramA, paramB, paramC, agreeScore, loseScore, scoreG + scoreA + scoreB + scoreC + agreeScore - loseScore);
                 list.add(param);
             });
         }
         TotalDataList totalDataList = new TotalDataList(list);
         return CommonResult.success(totalDataList);
+    }
+
+    @Override
+    public CommonResult<String> updateAgreeInfo(InfoScoreParam param) {
+        return null;
+    }
+
+    @Override
+    public CommonResult<String> updateLoseInfo(InfoScoreParam param) {
+        return null;
+    }
+
+    @Override
+    public CommonResult<String> updateAddInfo(StringParam param) {
+        return null;
     }
 
     public void updateCount(String publicForm, DataParam moreDataParam) {

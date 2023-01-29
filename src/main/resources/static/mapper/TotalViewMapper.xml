@@ -2,6 +2,7 @@
 <mapper namespace="com.tut.tutims.mapper.TotalViewMapper">
 
     <select id="selectAll" resultType="com.tut.tutims.entry.pojo.TotalView">
-        select * from total_info_view
+        select *
+        from total_info_view
     </select>
 </mapper>

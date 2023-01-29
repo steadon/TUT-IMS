@@ -4,6 +4,7 @@ import com.tut.tutims.entry.CommonResult;
 import com.tut.tutims.entry.param.AreaInfoParam;
 import com.tut.tutims.entry.param.GuardInfoParam;
 import com.tut.tutims.entry.param.ReportInfoParam;
+import com.tut.tutims.entry.result.AllDataList;
 import com.tut.tutims.entry.result.DepartmentList;
 import com.tut.tutims.entry.result.TotalDataList;
 import com.tut.tutims.service.DataService;
@@ -46,5 +47,10 @@ public class DataController {
     @GetMapping("/get/scoreList")
     public CommonResult<TotalDataList> getScoreList() {
         return dataService.getScoreList();
+    }
+
+    @GetMapping("/get/allData")
+    public CommonResult<AllDataList> getAll() {
+        return dataService.getAll();
     }
 }

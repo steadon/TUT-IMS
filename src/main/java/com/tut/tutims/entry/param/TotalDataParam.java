@@ -14,6 +14,6 @@ public class TotalDataParam {
     DataParam param3;
     DataParam param4;
     Double agreeScore;
-    Double doneScore;
+    Double loseScore;
     Double totalScore;
 }
