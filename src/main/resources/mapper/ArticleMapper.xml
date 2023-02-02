@@ -19,24 +19,24 @@
         update article
         set guard_info_id=#{id1},
             report_info_id=#{id2}
-        where article_id = #{articleId}
+        where id = #{articleId}
     </update>
     <update id="updateAgreeInfo">
         update article
         set agree_info=#{info},
             agree_score=#{score}
-        where article_id = #{articleId}
+        where id = #{articleId}
     </update>
     <update id="updateLoseInfo">
         update article
         set lose_info=#{info},
             lose_score=#{score}
-        where article_id = #{articleId}
+        where id = #{articleId}
     </update>
     <update id="updateAddInfo">
         update article
         set add_info=#{info}
-        where article_id = #{articleId}
+        where id = #{articleId}
     </update>
     <select id="selectNewOne" resultType="com.tut.tutims.entry.pojo.Article">
         select *
