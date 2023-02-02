@@ -1,9 +1,7 @@
 package com.tut.tutims.controller;
 
 import com.tut.tutims.entry.CommonResult;
-import com.tut.tutims.entry.param.AreaInfoParam;
-import com.tut.tutims.entry.param.GuardInfoParam;
-import com.tut.tutims.entry.param.ReportInfoParam;
+import com.tut.tutims.entry.param.*;
 import com.tut.tutims.entry.result.AllDataList;
 import com.tut.tutims.entry.result.DepartmentList;
 import com.tut.tutims.entry.result.TotalDataList;
@@ -50,5 +48,20 @@ public class DataController {
     @GetMapping("/get/allData")
     public CommonResult<AllDataList> getAll() {
         return dataService.getAll();
+    }
+
+    @PostMapping("/update/agreeInfo")
+    CommonResult<String> updateAgreeInfo(@RequestBody InfoScoreParam param) {
+        return dataService.updateAgreeInfo(param);
+    }
+
+    @PostMapping("/update/loseInfo")
+    CommonResult<String> updateLoseInfo(@RequestBody InfoScoreParam param) {
+        return dataService.updateLoseInfo(param);
+    }
+
+    @PostMapping("/update/addInfo")
+    CommonResult<String> updateAddInfo(@RequestBody StringParam param) {
+        return dataService.updateAddInfo(param);
     }
 }

@@ -1,5 +1,7 @@
 package com.tut.tutims.mapper;
 
+import com.tut.tutims.entry.CommonResult;
+import com.tut.tutims.entry.param.*;
 import com.tut.tutims.entry.pojo.Article;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,7 +13,13 @@ public interface ArticleMapper {
 
     Article selectNewOne();
 
-    Integer updateForeignId(Integer id1, Integer id2);
+    Integer updateForeignId(Integer id1, Integer id2, Integer articleId);
 
     List<Article> selectAll();
+
+    Integer updateAgreeInfo(String info, Double score, Integer articleId);
+
+    Integer updateLoseInfo(String info, Double score, Integer articleId);
+
+    Integer updateAddInfo(String info, Integer articleId);
 }

@@ -22,6 +22,9 @@ import java.util.Map;
 public class DataServiceImpl implements DataService {
     @Resource
     DepartmentMapper departmentMapper;
+
+    @Resource
+    ArticleMapper articleMapper;
     @Resource
     TotalViewMapper totalViewMapper;
     @Resource
@@ -174,17 +177,23 @@ public class DataServiceImpl implements DataService {
 
     @Override
     public CommonResult<String> updateAgreeInfo(InfoScoreParam param) {
-        return null;
+        if (articleMapper.updateAgreeInfo(param.getInfo(), param.getScore(), param.getArticleId()) == 0)
+            return CommonResult.fail("更新失败");
+        return CommonResult.success("更新成功");
     }
 
     @Override
     public CommonResult<String> updateLoseInfo(InfoScoreParam param) {
-        return null;
+        if (articleMapper.updateLoseInfo(param.getInfo(), param.getScore(), param.getArticleId()) == 0)
+            return CommonResult.fail("更新失败");
+        return CommonResult.success("更新成功");
     }
 
     @Override
     public CommonResult<String> updateAddInfo(StringParam param) {
-        return null;
+        if (articleMapper.updateAddInfo(param.getParam(), param.getArticleId()) == 0)
+            return CommonResult.fail("更新失败");
+        return CommonResult.success("更新成功");
     }
 
     public void updateCount(String publicForm, DataParam moreDataParam) {

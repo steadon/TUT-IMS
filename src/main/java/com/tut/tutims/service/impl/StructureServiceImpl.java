@@ -59,7 +59,8 @@ public class StructureServiceImpl implements StructureService {
         if (reportInfoMapper.addOne(articleId) == 0) return CommonResult.fail("新增摘报信息失败，请联系开发者");
         Integer id2 = reportInfoMapper.selectNewId();
 
-        if (articleMapper.updateForeignId(id1, id2) == 0) return CommonResult.fail("关联警备区与摘报信息失败");
+        if (articleMapper.updateForeignId(id1, id2, articleId) == 0)
+            return CommonResult.fail("关联警备区与摘报信息失败");
 
         return CommonResult.success("新增要讯成功");
     }

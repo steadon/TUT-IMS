@@ -4,5 +4,6 @@ import lombok.Data;
 
 @Data
 public class StringParam {
+    Integer articleId;
     String param;
 }

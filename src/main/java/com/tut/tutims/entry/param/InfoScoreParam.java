@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class InfoScoreParam {
+    Integer articleId;
     String info;
     Double score;
 }
