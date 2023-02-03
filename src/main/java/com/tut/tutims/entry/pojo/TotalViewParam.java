@@ -9,13 +9,13 @@ public class TotalViewParam {
     private String department;
     private String title;
     private String author;
-    private Integer weekNum;
+    private String weekNum;
     private String reportTime;
     //警备区
     private String isPublic;
     private String publicForm;
     private String mainForm;
-    private Integer issueNum;
+    private String issueNum;
     private Double guardScore;
     //上报
     private String pushNum;
@@ -76,7 +76,7 @@ public class TotalViewParam {
         this.department = view.getDepartment();
         this.title = view.getTitle();
         this.author = view.getAuthor();
-        this.weekNum = view.getWeekNum();
+        this.weekNum = "第" + view.getWeekNum() + "周";
         this.reportTime = view.getReportTime();
         if (view.getIsPublic()) {
             this.isPublic = "是";
@@ -85,7 +85,7 @@ public class TotalViewParam {
         }
         this.publicForm = view.getPublicForm();
         this.mainForm = view.getMainForm();
-        this.issueNum = view.getIssueNum();
+        this.issueNum = view.getIssueNum() + "号";
         this.guardScore = view.getGuardScore();
         this.pushNum = view.getPushNum();
         this.askNum = view.getAskNum();

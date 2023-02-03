@@ -20,6 +20,16 @@ public class DataController {
         this.dataService = service;
     }
 
+    @GetMapping("/get/allData")
+    public CommonResult<AllDataList> getAll() {
+        return dataService.getAll();
+    }
+
+    @GetMapping("/get/scoreList")
+    public CommonResult<TotalDataList> getScoreList() {
+        return dataService.getScoreList();
+    }
+
     @GetMapping("/get/department")
     public CommonResult<DepartmentList> getDepartment() {
         return dataService.getAllDepartment();
@@ -38,16 +48,6 @@ public class DataController {
     @PostMapping("/update/area")
     public CommonResult<String> updateAreaInfo(@RequestBody AreaInfoParam param) {
         return dataService.updateAreaInfo(param);
-    }
-
-    @GetMapping("/get/scoreList")
-    public CommonResult<TotalDataList> getScoreList() {
-        return dataService.getScoreList();
-    }
-
-    @GetMapping("/get/allData")
-    public CommonResult<AllDataList> getAll() {
-        return dataService.getAll();
     }
 
     @PostMapping("/update/agreeInfo")
