@@ -1,6 +1,6 @@
 package com.tut.tutims.service;
 
-import com.tut.tutims.entry.CommonResult;
+import com.tut.tutims.pojo.CommonResult;
 
 public interface StructureService {
     CommonResult<String> addDepartment(String name, String type);

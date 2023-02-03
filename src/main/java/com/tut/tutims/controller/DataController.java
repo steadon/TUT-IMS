@@ -1,18 +1,23 @@
 package com.tut.tutims.controller;
 
-import com.tut.tutims.entry.CommonResult;
-import com.tut.tutims.entry.param.*;
-import com.tut.tutims.entry.result.AllDataList;
-import com.tut.tutims.entry.result.DepartmentList;
-import com.tut.tutims.entry.result.TotalDataList;
+import com.tut.tutims.pojo.CommonResult;
+import com.tut.tutims.pojo.dto.param.*;
+import com.tut.tutims.pojo.dto.result.AllDataList;
+import com.tut.tutims.pojo.dto.result.DepartmentList;
+import com.tut.tutims.pojo.dto.result.TotalDataList;
 import com.tut.tutims.service.DataService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin
+import javax.servlet.http.HttpServletRequest;
+
+@Slf4j
 @RestController
 public class DataController {
-
     private final DataService dataService;
 
     @Autowired
@@ -21,47 +26,50 @@ public class DataController {
     }
 
     @GetMapping("/get/allData")
-    public CommonResult<AllDataList> getAll() {
+    public CommonResult<AllDataList> getAll(HttpServletRequest request) {
+        log.info(request.getRequestURI());
         return dataService.getAll();
     }
 
-    @GetMapping("/get/scoreList")
-    public CommonResult<TotalDataList> getScoreList() {
-        return dataService.getScoreList();
-    }
-
     @GetMapping("/get/department")
-    public CommonResult<DepartmentList> getDepartment() {
+    public CommonResult<DepartmentList> getDepartment(HttpServletRequest request) {
+        log.info(request.getRequestURI());
         return dataService.getAllDepartment();
     }
 
     @PostMapping("/update/guard")
-    public CommonResult<String> updateGuardInfo(@RequestBody GuardInfoParam param) {
+    public CommonResult<String> updateGuardInfo(@RequestBody GuardInfoParam param, HttpServletRequest request) {
+        log.info(request.getRequestURI());
         return dataService.updateGuardInfo(param);
     }
 
     @PostMapping("/update/report")
-    public CommonResult<String> updateReportInfo(@RequestBody ReportInfoParam param) {
+    public CommonResult<String> updateReportInfo(@RequestBody ReportInfoParam param, HttpServletRequest request) {
+        log.info(request.getRequestURI());
         return dataService.updateReportInfo(param);
     }
 
     @PostMapping("/update/area")
-    public CommonResult<String> updateAreaInfo(@RequestBody AreaInfoParam param) {
+    public CommonResult<String> updateAreaInfo(@RequestBody AreaInfoParam param, HttpServletRequest request) {
+        log.info(request.getRequestURI());
         return dataService.updateAreaInfo(param);
     }
 
     @PostMapping("/update/agreeInfo")
-    CommonResult<String> updateAgreeInfo(@RequestBody InfoScoreParam param) {
+    CommonResult<String> updateAgreeInfo(@RequestBody InfoScoreParam param, HttpServletRequest request) {
+        log.info(request.getRequestURI());
         return dataService.updateAgreeInfo(param);
     }
 
     @PostMapping("/update/loseInfo")
-    CommonResult<String> updateLoseInfo(@RequestBody InfoScoreParam param) {
+    CommonResult<String> updateLoseInfo(@RequestBody InfoScoreParam param, HttpServletRequest request) {
+        log.info(request.getRequestURI());
         return dataService.updateLoseInfo(param);
     }
 
     @PostMapping("/update/addInfo")
-    CommonResult<String> updateAddInfo(@RequestBody StringParam param) {
+    CommonResult<String> updateAddInfo(@RequestBody StringParam param, HttpServletRequest request) {
+        log.info(request.getRequestURI());
         return dataService.updateAddInfo(param);
     }
 }

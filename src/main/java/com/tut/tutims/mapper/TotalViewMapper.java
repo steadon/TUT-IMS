@@ -1,6 +1,6 @@
 package com.tut.tutims.mapper;
 
-import com.tut.tutims.entry.pojo.TotalView;
+import com.tut.tutims.pojo.domain.TotalView;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

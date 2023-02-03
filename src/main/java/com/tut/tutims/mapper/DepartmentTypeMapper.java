@@ -1,6 +1,6 @@
 package com.tut.tutims.mapper;
 
-import com.tut.tutims.entry.pojo.DepartmentType;
+import com.tut.tutims.pojo.domain.DepartmentType;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

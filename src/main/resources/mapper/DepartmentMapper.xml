@@ -4,16 +4,16 @@
         insert into department(`name`, `type_id`)
         values (#{name,jdbcType=VARCHAR}, #{typeId,jdbcType=INTEGER})
     </insert>
-    <select id="selectByName" resultType="com.tut.tutims.entry.pojo.Department">
+    <select id="selectByName" resultType="com.tut.tutims.pojo.domain.Department">
         select *
         from department
         where name = #{name,jdbcType=VARCHAR} limit 1
     </select>
-    <select id="selectAllDepartment" resultType="com.tut.tutims.entry.pojo.Department">
+    <select id="selectAllDepartment" resultType="com.tut.tutims.pojo.domain.Department">
         select *
         from department;
     </select>
-    <select id="selectById" resultType="com.tut.tutims.entry.pojo.Department">
+    <select id="selectById" resultType="com.tut.tutims.pojo.domain.Department">
         select *
         from department
         where id = #{departmentId,jdbcType=INTEGER} limit 1

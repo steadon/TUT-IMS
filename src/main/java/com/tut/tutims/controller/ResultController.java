@@ -1,14 +1,18 @@
 package com.tut.tutims.controller;
 
-import com.tut.tutims.entry.CommonResult;
-import com.tut.tutims.entry.result.AreaViewList;
+import com.tut.tutims.pojo.CommonResult;
+import com.tut.tutims.pojo.dto.result.AreaViewList;
+import com.tut.tutims.pojo.dto.result.TotalDataList;
 import com.tut.tutims.service.ResultService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin
+import javax.servlet.http.HttpServletRequest;
+
+@Slf4j
 @RestController
 public class ResultController {
 
@@ -20,7 +24,14 @@ public class ResultController {
     }
 
     @GetMapping("get/area")
-    public CommonResult<AreaViewList> consumeInfo(Integer areaId) {
+    public CommonResult<AreaViewList> consumeInfo(@RequestParam Integer areaId, HttpServletRequest request) {
+        log.info(request.getRequestURI());
         return resultService.consumeInfo(areaId);
+    }
+
+    @GetMapping("/get/scoreList")
+    public CommonResult<TotalDataList> getScoreList(HttpServletRequest request) {
+        log.info(request.getRequestURI());
+        return resultService.getScoreList();
     }
 }

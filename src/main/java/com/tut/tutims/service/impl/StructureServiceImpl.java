@@ -1,10 +1,10 @@
 package com.tut.tutims.service.impl;
 
-import com.tut.tutims.entry.CommonResult;
-import com.tut.tutims.entry.pojo.Article;
-import com.tut.tutims.entry.pojo.Department;
-import com.tut.tutims.entry.pojo.DepartmentType;
 import com.tut.tutims.mapper.*;
+import com.tut.tutims.pojo.CommonResult;
+import com.tut.tutims.pojo.domain.Article;
+import com.tut.tutims.pojo.domain.Department;
+import com.tut.tutims.pojo.domain.DepartmentType;
 import com.tut.tutims.service.StructureService;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
@@ -26,11 +26,6 @@ public class StructureServiceImpl implements StructureService {
     @Resource
     ReportInfoMapper reportInfoMapper;
 
-    /**
-     * @param name 部门名称
-     * @param type 部门类型名称
-     * @description 根据部门类型新增一个部门，此部门类型若不存在则创建
-     */
     @Override
     @CacheEvict(cacheNames = {"departmentList", "allData"})
     public synchronized CommonResult<String> addDepartment(String name, String type) {

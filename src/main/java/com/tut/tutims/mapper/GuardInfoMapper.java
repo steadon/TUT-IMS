@@ -1,6 +1,6 @@
 package com.tut.tutims.mapper;
 
-import com.tut.tutims.entry.pojo.GuardInfo;
+import com.tut.tutims.pojo.domain.GuardInfo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

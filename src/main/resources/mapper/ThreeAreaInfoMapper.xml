@@ -23,7 +23,7 @@
         from three_area_info
         order by id desc limit 3
     </select>
-    <select id="selectAll" resultType="com.tut.tutims.entry.pojo.ThreeAreaInfo">
+    <select id="selectAll" resultType="com.tut.tutims.pojo.domain.ThreeAreaInfo">
         select *
         from three_area_info;
     </select>

@@ -1,10 +1,9 @@
 package com.tut.tutims.service;
 
-import com.tut.tutims.entry.CommonResult;
-import com.tut.tutims.entry.param.*;
-import com.tut.tutims.entry.result.AllDataList;
-import com.tut.tutims.entry.result.DepartmentList;
-import com.tut.tutims.entry.result.TotalDataList;
+import com.tut.tutims.pojo.CommonResult;
+import com.tut.tutims.pojo.dto.param.*;
+import com.tut.tutims.pojo.dto.result.AllDataList;
+import com.tut.tutims.pojo.dto.result.DepartmentList;
 
 public interface DataService {
     CommonResult<AllDataList> getAll();
@@ -16,8 +15,6 @@ public interface DataService {
     CommonResult<String> updateReportInfo(ReportInfoParam param);
 
     CommonResult<String> updateAreaInfo(AreaInfoParam param);
-
-    CommonResult<TotalDataList> getScoreList();
 
     CommonResult<String> updateAgreeInfo(InfoScoreParam param);
 

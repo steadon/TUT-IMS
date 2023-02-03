@@ -1,6 +1,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tut.tutims.mapper.ArticleMapper">
-    <resultMap id="BaseResultMap" type="com.tut.tutims.entry.pojo.Article">
+    <resultMap id="BaseResultMap" type="com.tut.tutims.pojo.domain.Article">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="department_id" jdbcType="INTEGER" property="departmentId"/>
         <result column="title" jdbcType="VARCHAR" property="title"/>
@@ -38,12 +38,12 @@
         set add_info=#{info}
         where id = #{articleId}
     </update>
-    <select id="selectNewOne" resultType="com.tut.tutims.entry.pojo.Article">
+    <select id="selectNewOne" resultType="com.tut.tutims.pojo.domain.Article">
         select *
         from article
         order by id desc limit 1
     </select>
-    <select id="selectAll" resultType="com.tut.tutims.entry.pojo.Article">
+    <select id="selectAll" resultType="com.tut.tutims.pojo.domain.Article">
         select *
         from article;
     </select>

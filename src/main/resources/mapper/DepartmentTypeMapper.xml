@@ -5,7 +5,7 @@
         values (#{name,jdbcType=VARCHAR})
     </insert>
 
-    <select id="selectByName" resultType="com.tut.tutims.entry.pojo.DepartmentType">
+    <select id="selectByName" resultType="com.tut.tutims.pojo.domain.DepartmentType">
         select *
         from department_type
         where name = #{name,jdbcType=VARCHAR} limit 1

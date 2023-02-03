@@ -18,7 +18,7 @@
         select id
         from guard_info limit 1;
     </select>
-    <select id="selectAll" resultType="com.tut.tutims.entry.pojo.GuardInfo">
+    <select id="selectAll" resultType="com.tut.tutims.pojo.domain.GuardInfo">
         select *
         from guard_info;
     </select>

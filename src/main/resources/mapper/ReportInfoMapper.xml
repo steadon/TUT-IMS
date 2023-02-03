@@ -18,7 +18,7 @@
         select id
         from report_info limit 1;
     </select>
-    <select id="selectAll" resultType="com.tut.tutims.entry.pojo.ReportInfo">
+    <select id="selectAll" resultType="com.tut.tutims.pojo.domain.ReportInfo">
         select *
         from report_info;
     </select>
