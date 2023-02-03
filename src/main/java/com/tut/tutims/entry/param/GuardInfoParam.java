@@ -8,6 +8,6 @@ public class GuardInfoParam {
     String publicForm;
     String mainForm;
     Integer issueNum;
-    Double  score;
+    Double score;
     Integer articleId;
 }

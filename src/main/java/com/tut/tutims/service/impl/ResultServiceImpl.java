@@ -5,6 +5,7 @@ import com.tut.tutims.entry.pojo.AreaView;
 import com.tut.tutims.entry.result.AreaViewList;
 import com.tut.tutims.mapper.AreaViewMapper;
 import com.tut.tutims.service.ResultService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,6 +17,7 @@ public class ResultServiceImpl implements ResultService {
     AreaViewMapper areaViewMapper;
 
     @Override
+    @Cacheable(cacheNames = "areaView")
     public CommonResult<AreaViewList> consumeInfo(Integer areaId) {
         List<AreaView> areaViews = areaViewMapper.selectAllById(areaId);
         //移除空数据

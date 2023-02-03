@@ -6,6 +6,7 @@ import com.tut.tutims.entry.pojo.Department;
 import com.tut.tutims.entry.pojo.DepartmentType;
 import com.tut.tutims.mapper.*;
 import com.tut.tutims.service.StructureService;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -31,6 +32,7 @@ public class StructureServiceImpl implements StructureService {
      * @description 根据部门类型新增一个部门，此部门类型若不存在则创建
      */
     @Override
+    @CacheEvict(cacheNames = {"departmentList", "allData"})
     public synchronized CommonResult<String> addDepartment(String name, String type) {
         Department department = departmentMapper.selectByName(name);
         if (department != null) return CommonResult.fail("部门名称已存在");
@@ -45,6 +47,7 @@ public class StructureServiceImpl implements StructureService {
     }
 
     @Override
+    @CacheEvict(cacheNames = {"allData", "scoreList", "areaView"})
     public CommonResult<String> addArticle(Integer departmentId, String title, String author, Integer weekNum, String time) {
         if (articleMapper.addArticle(departmentId, title, author, weekNum, time) == 0)
             return CommonResult.fail("新增要讯失败，请联系开发者");
@@ -59,8 +62,7 @@ public class StructureServiceImpl implements StructureService {
         if (reportInfoMapper.addOne(articleId) == 0) return CommonResult.fail("新增摘报信息失败，请联系开发者");
         Integer id2 = reportInfoMapper.selectNewId();
 
-        if (articleMapper.updateForeignId(id1, id2, articleId) == 0)
-            return CommonResult.fail("关联警备区与摘报信息失败");
+        if (articleMapper.updateForeignId(id1, id2, articleId) == 0) return CommonResult.fail("关联警备区与摘报信息失败");
 
         return CommonResult.success("新增要讯成功");
     }

@@ -1,7 +1,5 @@
 package com.tut.tutims.mapper;
 
-import com.tut.tutims.entry.CommonResult;
-import com.tut.tutims.entry.param.*;
 import com.tut.tutims.entry.pojo.Article;
 import org.apache.ibatis.annotations.Mapper;
 

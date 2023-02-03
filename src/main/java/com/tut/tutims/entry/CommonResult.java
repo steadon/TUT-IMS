@@ -1,7 +1,6 @@
 package com.tut.tutims.entry;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import com.tut.tutims.entry.resultEnum.ResultEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;

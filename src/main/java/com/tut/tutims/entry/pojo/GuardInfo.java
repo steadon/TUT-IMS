@@ -10,5 +10,5 @@ public class GuardInfo {
     private String publicForm;
     private String mainForm;
     private Integer issueNum;
-    private Double  score;
+    private Double score;
 }

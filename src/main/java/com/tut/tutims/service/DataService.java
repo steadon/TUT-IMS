@@ -7,9 +7,9 @@ import com.tut.tutims.entry.result.DepartmentList;
 import com.tut.tutims.entry.result.TotalDataList;
 
 public interface DataService {
-    CommonResult<DepartmentList> getAllDepartment();
-
     CommonResult<AllDataList> getAll();
+
+    CommonResult<DepartmentList> getAllDepartment();
 
     CommonResult<String> updateGuardInfo(GuardInfoParam param);
 

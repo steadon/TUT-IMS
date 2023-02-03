@@ -2,13 +2,17 @@ package com.tut.tutims.service.impl;
 
 import com.tut.tutims.entry.CommonResult;
 import com.tut.tutims.entry.param.*;
-import com.tut.tutims.entry.pojo.*;
+import com.tut.tutims.entry.pojo.Department;
+import com.tut.tutims.entry.pojo.TotalView;
+import com.tut.tutims.entry.pojo.TotalViewParam;
 import com.tut.tutims.entry.result.AllDataList;
 import com.tut.tutims.entry.result.DepartmentList;
 import com.tut.tutims.entry.result.TotalDataList;
 import com.tut.tutims.mapper.*;
 import com.tut.tutims.service.DataService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -35,6 +39,7 @@ public class DataServiceImpl implements DataService {
     ReportInfoMapper reportInfoMapper;
 
     @Override
+    @Cacheable(cacheNames = "departmentList")
     public CommonResult<DepartmentList> getAllDepartment() {
         List<Department> departments = departmentMapper.selectAllDepartment();
         if (departments == null) return CommonResult.fail("暂未创建任何部门");
@@ -43,14 +48,22 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
+    @Cacheable(cacheNames = "allData")
     public CommonResult<AllDataList> getAll() {
         List<TotalView> totalViews = totalViewMapper.selectAll();
         if (totalViews.isEmpty()) return CommonResult.fail("暂无数据");
-        AllDataList list = new AllDataList(totalViews);
+        //按前端要求包装
+        List<TotalViewParam> paramList = new ArrayList<>();
+        for (TotalView totalView : totalViews) {
+            TotalViewParam param = new TotalViewParam(totalView);
+            paramList.add(param);
+        }
+        AllDataList list = new AllDataList(paramList);
         return CommonResult.success(list);
     }
 
     @Override
+    @CacheEvict(cacheNames = {"allData", "scoreList"})
     public CommonResult<String> updateGuardInfo(GuardInfoParam param) {
         Integer articleId = param.getArticleId();
         Double score = param.getScore();
@@ -64,6 +77,7 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
+    @CacheEvict(cacheNames = {"allData", "scoreList"})
     public CommonResult<String> updateReportInfo(ReportInfoParam param) {
         Integer articleId = param.getArticleId();
         String signDate = param.getSignDate();
@@ -77,6 +91,7 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
+    @CacheEvict(cacheNames = {"allData", "scoreList", "areaView"})
     public CommonResult<String> updateAreaInfo(AreaInfoParam param) {
         Integer areaId = param.getAreaId();
         String date = param.getDate();
@@ -92,6 +107,7 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
+    @Cacheable(cacheNames = "scoreList")
     public CommonResult<TotalDataList> getScoreList() {
 
         Map<String, Integer> map = new HashMap<>();
@@ -176,6 +192,7 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
+    @CacheEvict(cacheNames = {"allData", "scoreList"})
     public CommonResult<String> updateAgreeInfo(InfoScoreParam param) {
         if (articleMapper.updateAgreeInfo(param.getInfo(), param.getScore(), param.getArticleId()) == 0)
             return CommonResult.fail("更新失败");
@@ -183,6 +200,7 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
+    @CacheEvict(cacheNames = {"allData", "scoreList"})
     public CommonResult<String> updateLoseInfo(InfoScoreParam param) {
         if (articleMapper.updateLoseInfo(param.getInfo(), param.getScore(), param.getArticleId()) == 0)
             return CommonResult.fail("更新失败");
@@ -190,9 +208,9 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
+    @CacheEvict(cacheNames = "allData")
     public CommonResult<String> updateAddInfo(StringParam param) {
-        if (articleMapper.updateAddInfo(param.getParam(), param.getArticleId()) == 0)
-            return CommonResult.fail("更新失败");
+        if (articleMapper.updateAddInfo(param.getParam(), param.getArticleId()) == 0) return CommonResult.fail("更新失败");
         return CommonResult.success("更新成功");
     }
 
@@ -235,4 +253,3 @@ public class DataServiceImpl implements DataService {
         moreDataParam.setScore(score);
     }
 }
-
