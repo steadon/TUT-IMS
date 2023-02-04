@@ -4,18 +4,15 @@ import com.tut.tutims.pojo.CommonResult;
 import com.tut.tutims.pojo.dto.param.*;
 import com.tut.tutims.pojo.dto.result.AllDataList;
 import com.tut.tutims.pojo.dto.result.DepartmentList;
-import com.tut.tutims.pojo.dto.result.TotalDataList;
 import com.tut.tutims.service.DataService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
+@CrossOrigin
 @RestController
 public class DataController {
     private final DataService dataService;

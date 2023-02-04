@@ -12,5 +12,6 @@ public class AreaView {
     private String date;
     private String department;
     private String author;
+    private String addInfo;
     private Integer areaId;
 }

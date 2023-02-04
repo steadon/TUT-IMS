@@ -4,10 +4,10 @@ import lombok.Data;
 
 @Data
 public class GuardInfoParam {
-    private Boolean isPublic;
+    private String isPublic;
     private String publicForm;
     private String mainForm;
-    private Integer issueNum;
+    private String issueNum;
     private Double score;
     private Integer articleId;
 }

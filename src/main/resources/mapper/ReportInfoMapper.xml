@@ -16,7 +16,8 @@
     </update>
     <select id="selectNewId" resultType="java.lang.Integer">
         select id
-        from report_info limit 1;
+        from report_info
+        order by id desc limit 1;
     </select>
     <select id="selectAll" resultType="com.tut.tutims.pojo.domain.ReportInfo">
         select *

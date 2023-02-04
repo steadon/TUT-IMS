@@ -78,14 +78,14 @@ public class TotalViewParam {
         this.author = view.getAuthor();
         this.weekNum = "第" + view.getWeekNum() + "周";
         this.reportTime = view.getReportTime();
-        if (view.getIsPublic()) {
+        if (view.getIsPublic() != null && view.getIsPublic()) {
             this.isPublic = "是";
         } else {
             this.isPublic = "否";
         }
         this.publicForm = view.getPublicForm();
         this.mainForm = view.getMainForm();
-        this.issueNum = view.getIssueNum() + "号";
+        this.issueNum = view.getIssueNum();
         this.guardScore = view.getGuardScore();
         this.pushNum = view.getPushNum();
         this.askNum = view.getAskNum();

@@ -13,7 +13,6 @@ import com.tut.tutims.pojo.dto.result.AreaViewList;
 import com.tut.tutims.pojo.dto.result.TotalDataList;
 import com.tut.tutims.service.ResultService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -33,13 +32,9 @@ public class ResultServiceImpl implements ResultService {
     DepartmentMapper departmentMapper;
 
     @Override
-    @Cacheable(cacheNames = "areaView")
+//    @Cacheable(cacheNames = "areaView")
     public CommonResult<AreaViewList> consumeInfo(Integer areaId) {
         List<AreaView> areaViews = areaViewMapper.selectAllById(areaId);
-        //移除空数据
-        areaViews.removeIf(areaView -> areaView.getAreaId() != 3 && areaView.getTitle() == null);
-        //空链响应
-        if (areaViews.isEmpty()) return CommonResult.fail("暂无数据");
         //添加索引
         for (int i = 0, j = 1; i < areaViews.size(); i++, j++) {
             AreaView areaView = areaViews.get(i);
@@ -50,7 +45,7 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
-    @Cacheable(cacheNames = "scoreList")
+//    @Cacheable(cacheNames = "scoreList")
     public CommonResult<TotalDataList> getScoreList() {
 
         Map<String, Integer> map = new HashMap<>();
@@ -89,7 +84,7 @@ public class ResultServiceImpl implements ResultService {
             //警备区刊用形式
             String publicForm = totalView.getPublicForm();
             final DataParam moreDataParam = mapG.get(department);
-            updateCount(publicForm, moreDataParam);
+            if (publicForm != null) updateCount(publicForm, moreDataParam);
             //上报要讯编号->判断是否上报
             String pushNum = totalView.getPushNum();
             if (pushNum != null) {
@@ -103,33 +98,33 @@ public class ResultServiceImpl implements ResultService {
                 //三区分别刊用形式
                 String[] split = areaPublicForm.split(",");
                 final DataParam dataParamA = mapA.get(department);
-                updateCount(split[0], dataParamA);
+                if (split[0] != null) updateCount(split[0], dataParamA);
                 final DataParam dataParamB = mapB.get(department);
-                updateCount(split[1], dataParamB);
+                if (split[1] != null) updateCount(split[1], dataParamB);
                 final DataParam dataParamC = mapC.get(department);
-                updateCount(split[2], dataParamC);
+                if (split[2] != null) updateCount(split[2], dataParamC);
             }
         }
 
         List<TotalDataParam> list = new ArrayList<>();
-        for (int i = 0; i < map.size(); i++) {
-            map.forEach((k, v) -> {
-                Integer id = departmentMapper.selectByName(k).getId();
-                DataParam paramG = mapG.get(k);
-                Double scoreG = paramG.getScore();
-                DataParam paramA = mapA.get(k);
-                Double scoreA = paramA.getScore();
-                DataParam paramB = mapB.get(k);
-                Double scoreB = paramB.getScore();
-                DataParam paramC = mapC.get(k);
-                Double scoreC = paramC.getScore();
-                ScoreParam scoreParam = mapE.get(k);
-                Double agreeScore = scoreParam.getAgreeScore();
-                Double loseScore = scoreParam.getLoseScore();
-                TotalDataParam param = new TotalDataParam(id, k, v, paramG, paramA, paramB, paramC, agreeScore, loseScore, scoreG + scoreA + scoreB + scoreC + agreeScore - loseScore);
-                list.add(param);
-            });
-        }
+
+        map.forEach((k, v) -> {
+            Integer id = departmentMapper.selectByName(k).getId();
+            DataParam paramG = mapG.get(k);
+            Double scoreG = paramG.getScore();
+            DataParam paramA = mapA.get(k);
+            Double scoreA = paramA.getScore();
+            DataParam paramB = mapB.get(k);
+            Double scoreB = paramB.getScore();
+            DataParam paramC = mapC.get(k);
+            Double scoreC = paramC.getScore();
+            ScoreParam scoreParam = mapE.get(k);
+            Double agreeScore = scoreParam.getAgreeScore();
+            Double loseScore = scoreParam.getLoseScore();
+            TotalDataParam param = new TotalDataParam(id, k, v, paramG, paramA, paramB, paramC, agreeScore, loseScore, scoreG + scoreA + scoreB + scoreC + agreeScore - loseScore);
+            list.add(param);
+        });
+
         TotalDataList totalDataList = new TotalDataList(list);
         return CommonResult.success(totalDataList);
     }

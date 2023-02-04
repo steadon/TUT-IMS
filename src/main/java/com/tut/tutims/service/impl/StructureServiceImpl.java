@@ -27,7 +27,7 @@ public class StructureServiceImpl implements StructureService {
     ReportInfoMapper reportInfoMapper;
 
     @Override
-    @CacheEvict(cacheNames = {"departmentList", "allData"})
+//    @CacheEvict(cacheNames = {"departmentList", "allData"})
     public synchronized CommonResult<String> addDepartment(String name, String type) {
         Department department = departmentMapper.selectByName(name);
         if (department != null) return CommonResult.fail("部门名称已存在");
@@ -42,7 +42,7 @@ public class StructureServiceImpl implements StructureService {
     }
 
     @Override
-    @CacheEvict(cacheNames = {"allData", "scoreList", "areaView"})
+//    @CacheEvict(cacheNames = {"allData", "scoreList", "areaView"})
     public CommonResult<String> addArticle(Integer departmentId, String title, String author, Integer weekNum, String time) {
         if (articleMapper.addArticle(departmentId, title, author, weekNum, time) == 0)
             return CommonResult.fail("新增要讯失败，请联系开发者");

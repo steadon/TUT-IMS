@@ -17,7 +17,7 @@ public class TotalView {
     private Boolean isPublic;
     private String publicForm;
     private String mainForm;
-    private Integer issueNum;
+    private String issueNum;
     private Double guardScore;
     //上报
     private String pushNum;

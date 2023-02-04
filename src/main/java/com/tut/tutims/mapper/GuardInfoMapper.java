@@ -9,7 +9,7 @@ import java.util.List;
 public interface GuardInfoMapper {
     Integer addOne(Integer articleId);
 
-    Integer updateInfo(Boolean isPublic, String publicForm, String mainForm, Integer issueNum, Double score, Integer articleId);
+    Integer updateInfo(Boolean isPublic, String publicForm, String mainForm, String issueNum, Double score, Integer articleId);
 
     Integer selectNewId();
 
