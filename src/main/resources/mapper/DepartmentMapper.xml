@@ -11,7 +11,7 @@
     </select>
     <select id="selectAllDepartment" resultType="com.tut.tutims.pojo.domain.Department">
         select *
-        from department;
+        from department
     </select>
     <select id="selectById" resultType="com.tut.tutims.pojo.domain.Department">
         select *

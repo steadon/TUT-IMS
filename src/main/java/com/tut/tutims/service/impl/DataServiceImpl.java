@@ -10,6 +10,8 @@ import com.tut.tutims.pojo.dto.result.AllDataList;
 import com.tut.tutims.pojo.dto.result.DepartmentList;
 import com.tut.tutims.service.DataService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -33,7 +35,7 @@ public class DataServiceImpl implements DataService {
     ReportInfoMapper reportInfoMapper;
 
     @Override
-//    @Cacheable(cacheNames = "departmentList")
+    @Cacheable(cacheNames = "departmentList")
     public CommonResult<DepartmentList> getAllDepartment() {
         List<Department> departments = departmentMapper.selectAllDepartment();
         if (departments == null) return CommonResult.fail("暂未创建任何部门");
@@ -42,7 +44,7 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-//    @Cacheable(cacheNames = "allData")
+    @Cacheable(cacheNames = "allData", key = "1")
     public CommonResult<AllDataList> getAll() {
         List<TotalView> totalViews = totalViewMapper.selectAll();
         if (totalViews.isEmpty()) return CommonResult.fail("暂无数据");
@@ -57,7 +59,7 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-//    @CacheEvict(cacheNames = {"allData", "scoreList"})
+    @CacheEvict(cacheNames = {"allData", "scoreList"}, key = "1")
     public CommonResult<String> updateGuardInfo(GuardInfoParam param) {
         Integer articleId = param.getArticleId();
         Double score = param.getScore();
