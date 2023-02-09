@@ -25,7 +25,7 @@ public class DataController {
     }
 
     @GetMapping("/get/allData")
-    public CommonResult<AllDataList> getAll(@RequestParam(required = false, defaultValue = OriginKey) String name, HttpServletRequest request) {
+    public CommonResult<AllDataList> getAll(@RequestParam(required = false, defaultValue = "1") String name, HttpServletRequest request) {
         log.info(request.getRequestURI());
         return dataService.getAll(name);
     }

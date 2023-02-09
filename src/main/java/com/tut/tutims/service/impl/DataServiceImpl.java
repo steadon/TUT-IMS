@@ -50,7 +50,7 @@ public class DataServiceImpl implements DataService {
         List<TotalView> totalViews = totalViewMapper.selectAll();
         if (totalViews.isEmpty()) return CommonResult.fail("暂无数据");
         //模糊搜索
-        if (!name.equals(OriginKey)) totalViews.removeIf(a -> !a.getTitle().contains(name));
+        if (!name.equals("1")) totalViews.removeIf(a -> !a.getTitle().contains(name));
         //按前端要求包装
         List<TotalViewParam> paramList = new ArrayList<>();
         for (TotalView totalView : totalViews) {
@@ -122,7 +122,7 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    @CacheEvict(cacheNames = "allData", key = OriginKey)
+    @CacheEvict(cacheNames = {"allData", "areaView"}, key = OriginKey)
     public CommonResult<String> updateAddInfo(StringParam param) {
         if (articleMapper.updateAddInfo(param.getParam(), param.getArticleId()) == 0)
             return CommonResult.fail("更新失败");
