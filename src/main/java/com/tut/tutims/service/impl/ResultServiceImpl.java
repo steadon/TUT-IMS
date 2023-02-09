@@ -1,7 +1,6 @@
 package com.tut.tutims.service.impl;
 
 import com.tut.tutims.mapper.AreaViewMapper;
-import com.tut.tutims.mapper.DepartmentMapper;
 import com.tut.tutims.mapper.TotalViewMapper;
 import com.tut.tutims.pojo.CommonResult;
 import com.tut.tutims.pojo.domain.AreaView;
@@ -13,6 +12,7 @@ import com.tut.tutims.pojo.dto.result.AreaViewList;
 import com.tut.tutims.pojo.dto.result.TotalDataList;
 import com.tut.tutims.service.ResultService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.tut.tutims.common.Common.OriginKey;
+
 @Slf4j
 @Service
 public class ResultServiceImpl implements ResultService {
@@ -28,11 +30,9 @@ public class ResultServiceImpl implements ResultService {
     AreaViewMapper areaViewMapper;
     @Resource
     TotalViewMapper totalViewMapper;
-    @Resource
-    DepartmentMapper departmentMapper;
 
     @Override
-//    @Cacheable(cacheNames = "areaView")
+    @Cacheable(cacheNames = "areaView", key = OriginKey)
     public CommonResult<AreaViewList> consumeInfo(Integer areaId) {
         List<AreaView> areaViews = areaViewMapper.selectAllById(areaId);
         //添加索引
@@ -45,7 +45,7 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
-//    @Cacheable(cacheNames = "scoreList")
+    @Cacheable(cacheNames = "scoreList", key = OriginKey)
     public CommonResult<TotalDataList> getScoreList() {
 
         Map<String, Integer> map = new HashMap<>();
@@ -57,9 +57,9 @@ public class ResultServiceImpl implements ResultService {
 
         for (TotalView totalView : totalViewMapper.selectAll()) {
             //记录部门发文总数
-            String department = totalView.getDepartment();
+            var department = totalView.getDepartment();
             if (map.containsKey(department)) {
-                Integer integer = map.get(department);
+                var integer = map.get(department);
                 map.put(department, ++integer);
             } else {
                 map.put(department, 1);
@@ -70,15 +70,15 @@ public class ResultServiceImpl implements ResultService {
                 mapE.put(department, new ScoreParam());
             }
             //统计加分扣分
-            Double agreeScore = totalView.getAgreeScore();
-            Double loseScore = totalView.getLoseScore();
+            var agreeScore = totalView.getAgreeScore();
+            var loseScore = totalView.getLoseScore();
             //解决空指针安全
             if (agreeScore == null) agreeScore = 0.0d;
             if (loseScore == null) loseScore = 0.0d;
             ScoreParam scoreParam = mapE.get(department);
-            Double originAS = scoreParam.getAgreeScore();
+            var originAS = scoreParam.getAgreeScore();
             scoreParam.setAgreeScore(originAS + agreeScore);
-            Double originLS = scoreParam.getLoseScore();
+            var originLS = scoreParam.getLoseScore();
             scoreParam.setLoseScore(originLS + loseScore);
 
             //警备区刊用形式
@@ -89,12 +89,12 @@ public class ResultServiceImpl implements ResultService {
             String pushNum = totalView.getPushNum();
             if (pushNum != null) {
                 //有编号，上报计数+1
-                Integer push = moreDataParam.getPush();
+                var push = moreDataParam.getPush();
                 moreDataParam.setPush(++push);
-                Double score = moreDataParam.getScore();
+                var score = moreDataParam.getScore();
                 moreDataParam.setScore(score + 0.5);
                 //三区刊用形式
-                String areaPublicForm = totalView.getAreaPublicForm();
+                var areaPublicForm = totalView.getAreaPublicForm();
                 //三区分别刊用形式
                 String[] split = areaPublicForm.split(",");
                 final DataParam dataParamA = mapA.get(department);
@@ -107,9 +107,10 @@ public class ResultServiceImpl implements ResultService {
         }
 
         List<TotalDataParam> list = new ArrayList<>();
+        final int[] i = {1};
 
         map.forEach((k, v) -> {
-            Integer id = departmentMapper.selectByName(k).getId();
+            Integer id = i[0]++;
             DataParam paramG = mapG.get(k);
             Double scoreG = paramG.getScore();
             DataParam paramA = mapA.get(k);
@@ -131,14 +132,14 @@ public class ResultServiceImpl implements ResultService {
 
     public void updateCount(String publicForm, DataParam moreDataParam) {
         //枚举属性
-        Integer num2 = moreDataParam.getNum2();
-        Integer num3 = moreDataParam.getNum3();
-        Integer num4 = moreDataParam.getNum4();
-        Integer num5 = moreDataParam.getNum5();
-        Integer num6 = moreDataParam.getNum6();
-        Integer more = moreDataParam.getMore();
-        Integer push = moreDataParam.getPush();
-        Integer special = moreDataParam.getSpecial();
+        var num2 = moreDataParam.getNum2();
+        var num3 = moreDataParam.getNum3();
+        var num4 = moreDataParam.getNum4();
+        var num5 = moreDataParam.getNum5();
+        var num6 = moreDataParam.getNum6();
+        var more = moreDataParam.getMore();
+        var push = moreDataParam.getPush();
+        var special = moreDataParam.getSpecial();
         //分类统计
         switch (publicForm) {
             case "专报" -> moreDataParam.setNum2(++num2);
@@ -161,10 +162,10 @@ public class ResultServiceImpl implements ResultService {
             default -> log.info("error push_form");
         }
         //更新总数
-        int total = num2 + num3 + num4 + num5 + num6 + more + push + special;
+        var total = num2 + num3 + num4 + num5 + num6 + more + push + special;
         moreDataParam.setTotal(total);
         //算分公式
-        double score = 2 * num3 + 2 * num4 + num5 + 0.2 * num6 + 2 * special;
+        var score = 2 * num3 + 2 * num4 + num5 + 0.2 * num6 + 2 * special;
         moreDataParam.setScore(score);
     }
 }

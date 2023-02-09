@@ -1,5 +1,6 @@
-package com.tut.tutims.pojo.domain;
+package com.tut.tutims.pojo.dto.param;
 
+import com.tut.tutims.pojo.domain.TotalView;
 import lombok.Data;
 
 @Data
@@ -9,7 +10,6 @@ public class TotalViewParam {
     private String department;
     private String title;
     private String author;
-    private String weekNum;
     private String reportTime;
     //警备区
     private String isPublic;
@@ -76,7 +76,6 @@ public class TotalViewParam {
         this.department = view.getDepartment();
         this.title = view.getTitle();
         this.author = view.getAuthor();
-        this.weekNum = "第" + view.getWeekNum() + "周";
         this.reportTime = view.getReportTime();
         if (view.getIsPublic() != null && view.getIsPublic()) {
             this.isPublic = "是";

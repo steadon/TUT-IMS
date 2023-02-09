@@ -6,9 +6,9 @@ import com.tut.tutims.pojo.dto.result.AllDataList;
 import com.tut.tutims.pojo.dto.result.DepartmentList;
 
 public interface DataService {
-    CommonResult<AllDataList> getAll();
-
     CommonResult<DepartmentList> getAllDepartment();
+
+    CommonResult<AllDataList> getAll(String name);
 
     CommonResult<String> updateGuardInfo(GuardInfoParam param);
 

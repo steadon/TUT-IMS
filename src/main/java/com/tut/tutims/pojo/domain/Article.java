@@ -8,7 +8,6 @@ public class Article {
     private Integer departmentId;
     private String title;
     private String author;
-    private Integer week;
     private String time;
     private Integer guardInfoId;
     private Integer reportInfoId;

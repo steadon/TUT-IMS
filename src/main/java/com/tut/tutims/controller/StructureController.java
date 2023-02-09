@@ -34,7 +34,7 @@ public class StructureController {
         Integer weekNum = param.getWeekNum();
         String time = param.getTime();
         log.info(request.getRequestURI());
-        return structureService.addArticle(departmentId, title, author, weekNum, time);
+        return structureService.addArticle(departmentId, title, author, time);
     }
 
     @PostMapping("/add/department")

@@ -1,6 +1,6 @@
 package com.tut.tutims.pojo.dto.result;
 
-import com.tut.tutims.pojo.domain.TotalViewParam;
+import com.tut.tutims.pojo.dto.param.TotalViewParam;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

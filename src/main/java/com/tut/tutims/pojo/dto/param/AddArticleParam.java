@@ -15,6 +15,5 @@ public class AddArticleParam {
     private String title;
     @NotBlank(message = "撰稿者不能为空")
     private String author;
-    private Integer weekNum;
     private String time;
 }

@@ -5,15 +5,14 @@
         <result column="department_id" jdbcType="INTEGER" property="departmentId"/>
         <result column="title" jdbcType="VARCHAR" property="title"/>
         <result column="author" jdbcType="VARCHAR" property="author"/>
-        <result column="week" jdbcType="INTEGER" property="week"/>
         <result column="time" jdbcType="VARCHAR" property="time"/>
         <result column="guard_info_id" jdbcType="INTEGER" property="guardInfoId"/>
         <result column="report_info_id" jdbcType="INTEGER" property="reportInfoId"/>
     </resultMap>
 
     <insert id="addArticle">
-        insert into article (`department_id`, `title`, `author`, `week`, `time`)
-        values (#{departmentId}, #{title}, #{author}, #{weekNum}, #{time})
+        insert into article (`department_id`, `title`, `author`, `time`)
+        values (#{departmentId}, #{title}, #{author}, #{time})
     </insert>
     <update id="updateForeignId">
         update article

@@ -11,7 +11,6 @@ public class TotalView {
     private String department;
     private String title;
     private String author;
-    private Integer weekNum;
     private String reportTime;
     //警备区
     private Boolean isPublic;

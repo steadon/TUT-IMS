@@ -7,7 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface ArticleMapper {
-    Integer addArticle(Integer departmentId, String title, String author, Integer weekNum, String time);
+    Integer addArticle(Integer departmentId, String title, String author,  String time);
 
     Article selectNewOne();
 
