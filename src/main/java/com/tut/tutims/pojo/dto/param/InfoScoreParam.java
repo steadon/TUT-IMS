@@ -6,5 +6,5 @@ import lombok.Data;
 public class InfoScoreParam {
     private Integer articleId;
     private String info;
-    private Double score;
+    private String score;
 }

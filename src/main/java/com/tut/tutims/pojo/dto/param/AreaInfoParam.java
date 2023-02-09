@@ -9,7 +9,7 @@ public class AreaInfoParam {
     private String title;
     private String mainForm;
     private String publicForm;
-    private Double score;
+    private String score;
     private Integer articleId;
     private Integer areaId;
 }

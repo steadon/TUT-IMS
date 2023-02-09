@@ -68,7 +68,8 @@ public class DataServiceImpl implements DataService {
         var issueNum = param.getIssueNum();
         var mainForm = param.getMainForm();
         var publicForm = param.getPublicForm();
-        if (guardInfoMapper.updateInfo(isPublic, publicForm, mainForm, issueNum, score, articleId) == 0)
+        if (score.equals("无")) score = "0";
+        if (guardInfoMapper.updateInfo(isPublic, publicForm, mainForm, issueNum, Double.valueOf(score), articleId) == 0)
             return CommonResult.fail("更新警备区信息失败");
         return CommonResult.success("更新成功");
     }
@@ -98,7 +99,8 @@ public class DataServiceImpl implements DataService {
         var articleId = param.getArticleId();
         var mainForm = param.getMainForm();
         var publicForm = param.getPublicForm();
-        if (threeAreaInfoMapper.updateInfo(num, date, title, mainForm, publicForm, score, articleId, areaId) == 0)
+        if (score.equals("无")) score = "0";
+        if (threeAreaInfoMapper.updateInfo(num, date, title, mainForm, publicForm, Double.valueOf(score), articleId, areaId) == 0)
             return CommonResult.fail("更新三区信息失败");
         return CommonResult.success("更新成功");
     }
@@ -106,7 +108,9 @@ public class DataServiceImpl implements DataService {
     @Override
     @CacheEvict(cacheNames = {"allData", "scoreList"}, allEntries = true)
     public CommonResult<String> updateAgreeInfo(InfoScoreParam param) {
-        if (articleMapper.updateAgreeInfo(param.getInfo(), param.getScore(), param.getArticleId()) == 0)
+        String score = param.getScore();
+        if (score.equals("无")) score = "0";
+        if (articleMapper.updateAgreeInfo(param.getInfo(), Double.valueOf(score), param.getArticleId()) == 0)
             return CommonResult.fail("更新失败");
         return CommonResult.success("更新成功");
     }
@@ -114,7 +118,9 @@ public class DataServiceImpl implements DataService {
     @Override
     @CacheEvict(cacheNames = {"allData", "scoreList"}, allEntries = true)
     public CommonResult<String> updateLoseInfo(InfoScoreParam param) {
-        if (articleMapper.updateLoseInfo(param.getInfo(), param.getScore(), param.getArticleId()) == 0)
+        String score = param.getScore();
+        if (score.equals("无")) score = "0";
+        if (articleMapper.updateLoseInfo(param.getInfo(), Double.valueOf(score), param.getArticleId()) == 0)
             return CommonResult.fail("更新失败");
         return CommonResult.success("更新成功");
     }
