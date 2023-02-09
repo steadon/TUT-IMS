@@ -21,8 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.tut.tutims.common.Common.OriginKey;
-
 @Slf4j
 @Service
 public class ResultServiceImpl implements ResultService {
@@ -32,7 +30,7 @@ public class ResultServiceImpl implements ResultService {
     TotalViewMapper totalViewMapper;
 
     @Override
-    @Cacheable(cacheNames = "areaView", key = OriginKey)
+    @Cacheable(cacheNames = "areaView", key = "#areaId")
     public CommonResult<AreaViewList> consumeInfo(Integer areaId) {
         List<AreaView> areaViews = areaViewMapper.selectAllById(areaId);
         //添加索引
@@ -45,7 +43,7 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
-    @Cacheable(cacheNames = "scoreList", key = OriginKey)
+    @Cacheable(cacheNames = "scoreList")
     public CommonResult<TotalDataList> getScoreList() {
 
         Map<String, Integer> map = new HashMap<>();

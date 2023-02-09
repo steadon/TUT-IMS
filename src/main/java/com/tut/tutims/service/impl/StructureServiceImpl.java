@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
-import static com.tut.tutims.common.Common.OriginKey;
-
 @Service
 public class StructureServiceImpl implements StructureService {
     @Resource
@@ -29,7 +27,7 @@ public class StructureServiceImpl implements StructureService {
     ReportInfoMapper reportInfoMapper;
 
     @Override
-    @CacheEvict(cacheNames = {"departmentList", "allData"}, key = OriginKey)
+    @CacheEvict(cacheNames = {"departmentList", "allData"}, allEntries = true)
     public synchronized CommonResult<String> addDepartment(String name, String type) {
         Department department = departmentMapper.selectByName(name);
         if (department != null) return CommonResult.fail("部门名称已存在");
@@ -44,7 +42,7 @@ public class StructureServiceImpl implements StructureService {
     }
 
     @Override
-    @CacheEvict(cacheNames = {"allData", "scoreList", "areaView"}, key = OriginKey)
+    @CacheEvict(cacheNames = {"allData", "scoreList", "areaView"}, allEntries = true)
     public CommonResult<String> addArticle(Integer departmentId, String title, String author, String time) {
         if (articleMapper.addArticle(departmentId, title, author, time) == 0)
             return CommonResult.fail("新增要讯失败，请联系开发者");

@@ -17,8 +17,6 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.tut.tutims.common.Common.OriginKey;
-
 @Slf4j
 @Service
 public class DataServiceImpl implements DataService {
@@ -36,7 +34,7 @@ public class DataServiceImpl implements DataService {
     ReportInfoMapper reportInfoMapper;
 
     @Override
-    @Cacheable(cacheNames = "departmentList", key = OriginKey)
+    @Cacheable(cacheNames = "departmentList")
     public CommonResult<DepartmentList> getAllDepartment() {
         List<Department> departments = departmentMapper.selectAllDepartment();
         if (departments == null) return CommonResult.fail("暂未创建任何部门");
@@ -50,7 +48,7 @@ public class DataServiceImpl implements DataService {
         List<TotalView> totalViews = totalViewMapper.selectAll();
         if (totalViews.isEmpty()) return CommonResult.fail("暂无数据");
         //模糊搜索
-        if (!name.equals("1")) totalViews.removeIf(a -> !a.getTitle().contains(name));
+        if (!name.equals("NULL")) totalViews.removeIf(a -> !a.getTitle().contains(name));
         //按前端要求包装
         List<TotalViewParam> paramList = new ArrayList<>();
         for (TotalView totalView : totalViews) {
@@ -62,7 +60,7 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    @CacheEvict(cacheNames = {"allData", "scoreList"}, key = OriginKey)
+    @CacheEvict(cacheNames = {"allData", "scoreList"}, allEntries = true)
     public CommonResult<String> updateGuardInfo(GuardInfoParam param) {
         var articleId = param.getArticleId();
         var score = param.getScore();
@@ -76,7 +74,7 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    @CacheEvict(cacheNames = {"allData", "scoreList"}, key = OriginKey)
+    @CacheEvict(cacheNames = {"allData", "scoreList"}, allEntries = true)
     public CommonResult<String> updateReportInfo(ReportInfoParam param) {
         var articleId = param.getArticleId();
         var signDate = param.getSignDate();
@@ -90,7 +88,7 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    @CacheEvict(cacheNames = {"allData", "scoreList", "areaView"}, key = OriginKey)
+    @CacheEvict(cacheNames = {"allData", "scoreList", "areaView"}, allEntries = true)
     public CommonResult<String> updateAreaInfo(AreaInfoParam param) {
         var areaId = param.getAreaId();
         var date = param.getDate();
@@ -106,7 +104,7 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    @CacheEvict(cacheNames = {"allData", "scoreList"}, key = OriginKey)
+    @CacheEvict(cacheNames = {"allData", "scoreList"}, allEntries = true)
     public CommonResult<String> updateAgreeInfo(InfoScoreParam param) {
         if (articleMapper.updateAgreeInfo(param.getInfo(), param.getScore(), param.getArticleId()) == 0)
             return CommonResult.fail("更新失败");
@@ -114,7 +112,7 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    @CacheEvict(cacheNames = {"allData", "scoreList"}, key = OriginKey)
+    @CacheEvict(cacheNames = {"allData", "scoreList"}, allEntries = true)
     public CommonResult<String> updateLoseInfo(InfoScoreParam param) {
         if (articleMapper.updateLoseInfo(param.getInfo(), param.getScore(), param.getArticleId()) == 0)
             return CommonResult.fail("更新失败");
@@ -122,7 +120,7 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    @CacheEvict(cacheNames = {"allData", "areaView"}, key = OriginKey)
+    @CacheEvict(cacheNames = {"allData", "areaView"}, allEntries = true)
     public CommonResult<String> updateAddInfo(StringParam param) {
         if (articleMapper.updateAddInfo(param.getParam(), param.getArticleId()) == 0)
             return CommonResult.fail("更新失败");

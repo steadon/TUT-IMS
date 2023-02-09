@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static com.tut.tutims.common.Common.OriginKey;
-
 @Slf4j
 @CrossOrigin
 @RestController
@@ -25,7 +23,7 @@ public class DataController {
     }
 
     @GetMapping("/get/allData")
-    public CommonResult<AllDataList> getAll(@RequestParam(required = false, defaultValue = "1") String name, HttpServletRequest request) {
+    public CommonResult<AllDataList> getAll(@RequestParam(required = false, defaultValue = "NULL") String name, HttpServletRequest request) {
         log.info(request.getRequestURI());
         return dataService.getAll(name);
     }
