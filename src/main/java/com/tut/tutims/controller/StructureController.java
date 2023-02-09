@@ -28,19 +28,18 @@ public class StructureController {
 
     @PostMapping("/add/article")
     public CommonResult<String> addArticle(@RequestBody @Validated AddArticleParam param, HttpServletRequest request) {
-        Integer departmentId = param.getDepartmentId();
-        String title = param.getTitle();
-        String author = param.getAuthor();
-        Integer weekNum = param.getWeekNum();
-        String time = param.getTime();
+        var departmentId = param.getDepartmentId();
+        var title = param.getTitle();
+        var author = param.getAuthor();
+        var time = param.getTime();
         log.info(request.getRequestURI());
         return structureService.addArticle(departmentId, title, author, time);
     }
 
     @PostMapping("/add/department")
     public CommonResult<String> addDepartment(@RequestBody @Validated AddDepartmentParam param, HttpServletRequest request) {
-        String type = param.getType();
-        String name = param.getName();
+        var type = param.getType();
+        var name = param.getName();
         log.info(request.getRequestURI());
         return structureService.addDepartment(name, type);
     }
